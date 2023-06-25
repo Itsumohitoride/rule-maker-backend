@@ -21,7 +21,6 @@ public class JSONArrayReadConverter implements Converter<Document, JSONArray> {
                 jsonArray.put(dataMap); 
             }
         }
-        System.out.println(jsonArray);
         return jsonArray;
     }
 }

@@ -1,8 +1,6 @@
 package com.techCamp.backend.controller;
 
 import java.util.List;
-
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,9 +29,8 @@ public class TableController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<JSONObject> getOne(@PathVariable("id") int id){
-        JSONObject object=new JSONObject(tableService.getOne(id));
-        return ResponseEntity.ok(object);
+    public ResponseEntity<Table> getOne(@PathVariable("id") int id){
+        return ResponseEntity.ok(tableService.getOne(id));
     }
 
     @PostMapping

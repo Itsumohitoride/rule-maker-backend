@@ -3,10 +3,6 @@ import org.json.JSONArray;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.techCamp.backend.components.JSONArrayDeserializer;
-
 @Document(collection = "tables")
 
 public class Table {
@@ -15,8 +11,6 @@ public class Table {
 
     private String title;
 
-    @JsonProperty
-    @JsonDeserialize(using = JSONArrayDeserializer.class)
     private JSONArray data;
 
     public Table() {
