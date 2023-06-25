@@ -15,6 +15,6 @@ public class RuleMakerApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(RuleMakerApplication.class, args);
 	}
- 
+  
 }
  
