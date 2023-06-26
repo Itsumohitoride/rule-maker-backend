@@ -7,7 +7,7 @@ import com.techCamp.backend.model.Rule;
 public class EvalService {
     private String separator="[()]";
     private String andSeparator="&";
-    private String orSeparator=",";
+    private String orSeparator="\\|\\|";
     private String equalSeparator="=";
     private String greatearSeparator=">";
     private String lesserSeparator="<";
