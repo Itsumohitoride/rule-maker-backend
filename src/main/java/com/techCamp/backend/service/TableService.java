@@ -1,13 +1,14 @@
 package com.techCamp.backend.service;
 
 import java.util.List;
+
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.techCamp.backend.dto.TableDto;
 import com.techCamp.backend.model.Table;
 import com.techCamp.backend.repository.TableRepository;
-
 @Service
 public class TableService {
     @Autowired
@@ -31,13 +32,19 @@ public class TableService {
         Table table=tableRepository.findById(id);
         table.setData(dto.getData());
         table.setTitle(dto.getTitle());
-        return table;
+        return tableRepository.save(table);
     }
     
     public Table delete(int id){
-         Table table= tableRepository.findById(id);
-         tableRepository.delete(table);
-         return table;
+        Table table= tableRepository.findById(id);
+        tableRepository.delete(table);
+        return table;
+    }
+
+    public JSONObject findInBy(int id,String key,String value){
+        Table table=tableRepository.findById(id);
+        JSONObject match=tableRepository.searchInBy(table, key, value);
+        return match;
     }
 
     private int autoIncrement(){

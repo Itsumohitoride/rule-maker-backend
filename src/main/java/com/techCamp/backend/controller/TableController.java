@@ -1,6 +1,8 @@
 package com.techCamp.backend.controller;
 
 import java.util.List;
+
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.techCamp.backend.dto.KeyValueDto;
 import com.techCamp.backend.dto.TableDto;
 import com.techCamp.backend.model.Table;
 import com.techCamp.backend.service.TableService;
@@ -48,5 +51,11 @@ public class TableController {
     public ResponseEntity<Table> delete(@PathVariable("id") int id){
         return ResponseEntity.ok(tableService.delete(id));
     }
+
+    @GetMapping("/evaluate/{id}")
+    public ResponseEntity<String> serchInBy(@PathVariable("id") int id,@RequestBody KeyValueDto dto){
+        return ResponseEntity.ok(tableService.findInBy(id, dto.getKey(), dto.getValue()).toString());
+    }
+    
 
 }

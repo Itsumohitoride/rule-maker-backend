@@ -18,7 +18,7 @@ public class JSONArrayReadConverter implements Converter<Document, JSONArray> {
             for(Object obj:list){
                 Document docObject = (Document) obj;
                 Map<String,Object> dataMap=(Map<String,Object>) docObject.get(docObject.keySet().toArray()[0]);
-                jsonArray.put(dataMap); 
+                jsonArray.put(dataMap);
             }
         }
         return jsonArray;
