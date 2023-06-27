@@ -2,52 +2,45 @@ package com.techCamp.backend.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+import com.techCamp.backend.api.RuleAPI;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.http.ResponseEntity;
 
 import com.techCamp.backend.dto.RuleDto;
 import com.techCamp.backend.model.Rule;
 import com.techCamp.backend.service.RuleService;
 
 @RestController
-@RequestMapping("/rule")
-public class RuleController {
-    @Autowired
-    RuleService ruleService;
+@RequestMapping(RuleAPI.BASE_RULE_URL)
+@AllArgsConstructor
+public class RuleController implements RuleAPI {
+    private final RuleService ruleService;
 
-    @GetMapping
-    public ResponseEntity<List<Rule>> getAll(){
-        return ResponseEntity.ok(ruleService.getAll());
+    @Override
+    public List<Rule> getAll(){
+        return ruleService.getAll();
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Rule> getOne(@PathVariable int id){
-        return ResponseEntity.ok(ruleService.getOne(id));
+    @Override
+    public Rule getOne(int id){
+        return ruleService.getOne(id);
     }
 
-    @PostMapping
-    public ResponseEntity<Rule> save(@RequestBody RuleDto dto){
+    @Override
+    public Rule save(RuleDto dto){
         System.out.println(dto.getName());
-        return ResponseEntity.ok(ruleService.save(dto));
+        return ruleService.save(dto);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Rule> update(@PathVariable int id,@RequestBody RuleDto dto){
-        return ResponseEntity.ok(ruleService.update(id,dto));
+    @Override
+    public Rule update(int id,@RequestBody RuleDto dto){
+        return ruleService.update(id,dto);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Rule> delete(@PathVariable int id){
-        return ResponseEntity.ok(ruleService.delete(id));
+    @Override
+    public Rule delete(int id){
+        return ruleService.delete(id);
     }
-
-
 }

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping()
+@RequestMapping(TableAPI.BASE_TABLE_URL)
 public interface TableAPI {
     String BASE_TABLE_URL = "/table";
 
