@@ -23,7 +23,4 @@ public class EvalController {
     public ResponseEntity<Boolean> update(@PathVariable int idRule,@PathVariable int idTable,@RequestBody KeyValueDto dto){
         return ResponseEntity.ok(evalService.evaluate(idRule, idTable, dto.getKey(), dto.getValue()));
     }
-
-
-    
 }
