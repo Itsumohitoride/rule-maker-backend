@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.techCamp.backend.api.TableAPI;
 import com.techCamp.backend.dto.RequestEvaluationDTO;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,8 +15,9 @@ import com.techCamp.backend.service.TableService;
 
 @RestController
 @RequestMapping(TableAPI.BASE_TABLE_URL)
+@AllArgsConstructor
 public class TableController implements TableAPI {
-    TableService tableService;
+    private final TableService tableService;
 
     @Override
     public Table getOne(int id){
