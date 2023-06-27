@@ -4,7 +4,7 @@ import com.techCamp.backend.dto.CreateUsersDTO;
 import com.techCamp.backend.dto.ResponseUserDTO;
 import com.techCamp.backend.mapper.UserMapper;
 import com.techCamp.backend.mapper.UserMapperImpl;
-import com.techCamp.backend.model.Users;
+import com.techCamp.backend.model.User;
 import com.techCamp.backend.repository.UsersRepository;
 import com.techCamp.backend.service.UsersService;
 import org.junit.jupiter.api.BeforeEach;
@@ -42,8 +42,8 @@ public class UserServiceTest {
         verify(usersRepository, times(1)).save(any());
 
     }
-    private Users defaultCustomer() {
-        return Users.builder().firstName("luis").lastName("andres").email("lucho@email.com").password("password").phoneNumber("332036584").role("admin").build();
+    private User defaultCustomer() {
+        return User.builder().firstName("luis").lastName("andres").email("lucho@email.com").password("password").phoneNumber("332036584").role("admin").build();
     }
 
     private ResponseUserDTO defaultResponseCustomerDTO() {

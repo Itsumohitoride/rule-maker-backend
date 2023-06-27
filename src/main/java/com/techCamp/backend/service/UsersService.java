@@ -3,7 +3,7 @@ import com.techCamp.backend.dto.CreateUsersDTO;
 import com.techCamp.backend.dto.ResponseUserDTO;
 import com.techCamp.backend.error.util.RuleMakerExceptionBuilder;
 import com.techCamp.backend.mapper.UserMapper;
-import com.techCamp.backend.model.Users;
+import com.techCamp.backend.model.User;
 import com.techCamp.backend.repository.UsersRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,7 +21,7 @@ public class UsersService {
         validateIfEmailIsDuplicated(createUsersDto.email());
         validateIfPhoneIsDuplicated(createUsersDto.phoneNumber());
         validateRole(createUsersDto.role());
-        Users newUser = userMapper.fromCreateUserDTO(createUsersDto);
+        User newUser = userMapper.fromCreateUserDTO(createUsersDto);
         newUser.setUserId(UUID.randomUUID());
         newUser.setPassword(encoder.encode(createUsersDto.password()));
         ResponseUserDTO userResponse = userMapper.fromUserToResponseUserDTO(userRepository.save(newUser));

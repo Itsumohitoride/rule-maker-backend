@@ -1,23 +1,23 @@
 package com.techCamp.backend.unit.matcher;
 
 
-import com.techCamp.backend.model.Users;
+import com.techCamp.backend.model.User;
 import org.mockito.ArgumentMatcher;
 
 import java.util.Objects;
 
-public class UsersMatcher implements ArgumentMatcher<Users> {
+public class UsersMatcher implements ArgumentMatcher<User> {
 
-    private final Users users;
+    private final User users;
 
 
-    public UsersMatcher(Users users) {
+    public UsersMatcher(User users) {
         this.users = users;
     }
 
 
     @Override
-    public boolean matches(Users usersOne) {
+    public boolean matches(User usersOne) {
 
         return usersOne.getUserId() != null &&
                 Objects.equals(usersOne.getFirstName(), users.getFirstName()) &&
