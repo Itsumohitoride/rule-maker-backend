@@ -3,7 +3,6 @@ package com.techCamp.backend.controller;
 import com.techCamp.backend.api.EvaluationAPI;
 import com.techCamp.backend.dto.RequestEvaluationDTO;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
