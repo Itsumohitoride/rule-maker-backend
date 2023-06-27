@@ -1,24 +1,24 @@
 package com.techCamp.backend.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import com.techCamp.backend.api.EvaluationAPI;
+import com.techCamp.backend.dto.RequestEvaluationDTO;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.techCamp.backend.dto.KeyValueDto;
 import com.techCamp.backend.service.EvalService;
 
-@RestController
-@RequestMapping("/evaluate")
-public class EvalController {
-    @Autowired
-    EvalService evalService;
+import static com.techCamp.backend.api.EvaluationAPI.BASE_EVALUATION_URL;
 
-    @GetMapping("/{idRule}/{idTable}")
-    public ResponseEntity<Boolean> update(@PathVariable int idRule,@PathVariable int idTable,@RequestBody KeyValueDto dto){
-        return ResponseEntity.ok(evalService.evaluate(idRule, idTable, dto.getKey(), dto.getValue()));
+@RestController
+@RequestMapping(BASE_EVALUATION_URL)
+@AllArgsConstructor
+public class EvalController implements EvaluationAPI {
+    private final EvalService evalService;
+
+    @Override
+    public boolean evaluateRule(@RequestBody RequestEvaluationDTO evaluation){
+        return evalService.evaluate(evaluation.getRuleId(), evaluation.getTableId(), evaluation.getKey(), evaluation.getValue());
     }
 }

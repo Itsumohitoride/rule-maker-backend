@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.techCamp.backend.dto.KeyValueDto;
 import com.techCamp.backend.dto.TableDto;
 import com.techCamp.backend.model.Table;
 import com.techCamp.backend.service.TableService;

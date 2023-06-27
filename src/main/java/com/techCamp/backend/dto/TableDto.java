@@ -21,5 +21,4 @@ public class TableDto {
         System.out.println(jsonArray.toString());
         return jsonArray;
     }
-
 }
