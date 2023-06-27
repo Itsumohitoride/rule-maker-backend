@@ -26,7 +26,7 @@ public class RuleMakerExceptionBuilder {
         return new RuleMakerException(message, error);
     }
 
-    public RuleMakerException duplicatedValueException(String message, String field){
+    public static RuleMakerException duplicatedValueException(String message, String field){
         RuleMakerError error = createRuleMakerError(HttpStatus.CONFLICT, new DetailBuilder(ErrorCode.ERR_DUPLICATED, field));
         return new RuleMakerException(message, error);
     }
