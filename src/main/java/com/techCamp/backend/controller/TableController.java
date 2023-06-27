@@ -1,6 +1,9 @@
 package com.techCamp.backend.controller;
 
 import java.util.List;
+
+import com.techCamp.backend.api.TableAPI;
+import com.techCamp.backend.dto.RequestEvaluationDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,39 +19,40 @@ import com.techCamp.backend.dto.TableDto;
 import com.techCamp.backend.model.Table;
 import com.techCamp.backend.service.TableService;
 
+import static com.techCamp.backend.api.TableAPI.BASE_TABLE_URL;
+
 @RestController
-@RequestMapping("/table")
-public class TableController {
-    @Autowired
+@RequestMapping(BASE_TABLE_URL)
+public class TableController implements TableAPI {
     TableService tableService;
 
-    @GetMapping
-    public ResponseEntity<List<Table>> getAll(){
-        return ResponseEntity.ok(tableService.getAll());
+    @Override
+    public Table getOne(int id){
+        return tableService.getOne(id);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Table> getOne(@PathVariable("id") int id){
-        return ResponseEntity.ok(tableService.getOne(id));
+    @Override
+    public Table save(TableDto dto){
+        return tableService.save(dto);
     }
 
-    @PostMapping
-    public ResponseEntity<Table> save(@RequestBody TableDto dto){
-        return ResponseEntity.ok(tableService.save(dto));
+    @Override
+    public Table update(int id, TableDto dto){
+        return tableService.update(id, dto);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Table> update(@PathVariable("id") int id,@RequestBody TableDto dto){
-        return ResponseEntity.ok(tableService.update(id,dto));
+    @Override
+    public Table delete(int id){
+        return tableService.delete(id);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Table> delete(@PathVariable("id") int id){
-        return ResponseEntity.ok(tableService.delete(id));
+    @Override
+    public String searchInBy(RequestEvaluationDTO evaluation){
+        return tableService.findInBy(evaluation.getTableId(), evaluation.getKey(), evaluation.getValue()).toString();
     }
 
-    @GetMapping("/evaluate/{id}")
-    public ResponseEntity<String> searchInBy(@PathVariable("id") int id,@RequestBody KeyValueDto dto){
-        return ResponseEntity.ok(tableService.findInBy(id, dto.getKey(), dto.getValue()).toString());
+    @Override
+    public List<Table> getAll(){
+        return tableService.getAll();
     }
 }

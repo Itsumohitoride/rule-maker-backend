@@ -18,7 +18,7 @@ public class EvalController implements EvaluationAPI {
     private final EvalService evalService;
 
     @Override
-    public boolean evaluateRule(@RequestBody RequestEvaluationDTO evaluation){
+    public boolean evaluateRule(RequestEvaluationDTO evaluation){
         return evalService.evaluate(evaluation.getRuleId(), evaluation.getTableId(), evaluation.getKey(), evaluation.getValue());
     }
 }

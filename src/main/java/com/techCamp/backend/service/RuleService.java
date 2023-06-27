@@ -24,28 +24,25 @@ public class RuleService {
     }
 
     public Rule save(RuleDto dto){
-        int id=autoIncrement();
-        Rule ruleToSave=new Rule(id,dto.getName(),dto.getRule());
-        ruleRepository.save(ruleToSave);
-        return ruleToSave;
+        int id = autoIncrement();
+        Rule ruleToSave = new Rule(id, dto.getName(), dto.getRule());
+        return ruleRepository.save(ruleToSave);
     }
 
     public Rule update(int id,RuleDto dto){
-        Rule rule=ruleRepository.findById(id);
+        Rule rule = ruleRepository.findById(id);
         rule.setName(dto.getName());
         rule.setRule(dto.getRule());
         return ruleRepository.save(rule);
     }
 
     public Rule delete(int id){
-        Rule ruleTodelete=ruleRepository.findById(id);
-        ruleRepository.delete(ruleTodelete);
-        return ruleTodelete;
+        Rule ruleToDelete=ruleRepository.findById(id);
+        return ruleRepository.delete(ruleToDelete);
     }
 
     private int autoIncrement(){
         List<Rule> rules=ruleRepository.findAll();
-        return rules.isEmpty() ? 1: rules.size()+1;
+        return rules.isEmpty() ? 1 : rules.size() + 1;
     }
-
 }

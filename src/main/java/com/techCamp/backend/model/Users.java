@@ -1,18 +1,16 @@
 package com.techCamp.backend.model;
 
+import lombok.*;
 import org.springframework.data.annotation.Id;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Entity;
 import java.util.UUID;
-@Data
-@Entity
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Document(collection = "users")
 public class Users {
     @Id
     private UUID userId;
@@ -22,6 +20,4 @@ public class Users {
     private String password;
     private String phoneNumber;
     private String role;
-
-
 }
