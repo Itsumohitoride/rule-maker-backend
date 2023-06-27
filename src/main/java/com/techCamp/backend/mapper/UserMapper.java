@@ -1,6 +1,6 @@
 package com.techCamp.backend.mapper;
 
-import com.techCamp.backend.dto.CreateUsersDto;
+import com.techCamp.backend.dto.CreateUsersDTO;
 import com.techCamp.backend.dto.ResponseUserDTO;
 import com.techCamp.backend.model.Users;
 import org.mapstruct.Mapper;
@@ -8,8 +8,8 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 
-    Users fromCreateUserDTO(CreateUsersDto createUsersDto);
+    Users fromCreateUserDTO(CreateUsersDTO createUsersDto);
 
-    CreateUsersDto fromUser(Users users);
+    CreateUsersDTO fromUser(Users users);
     ResponseUserDTO fromUserToResponseUserDTO(Users users);
 }

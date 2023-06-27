@@ -30,7 +30,10 @@ public class RuleMakerExceptionBuilder {
         RuleMakerError error = createRuleMakerError(HttpStatus.CONFLICT, new DetailBuilder(ErrorCode.ERR_DUPLICATED, field));
         return new RuleMakerException(message, error);
     }
-
+    public static RuleMakerException noFoundRoleException(String message, String field){
+        RuleMakerError error = createRuleMakerError(HttpStatus.CONFLICT, new DetailBuilder(ErrorCode.ERR_DUPLICATED, field));
+        return new RuleMakerException(message, error);
+    }
     public static RuleMakerError createRuleMakerError(HttpStatus httpStatus, DetailBuilder... details) {
         return RuleMakerError.builder()
                 .status(httpStatus)

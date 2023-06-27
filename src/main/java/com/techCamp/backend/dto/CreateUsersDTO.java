@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 @Builder
 @EmailOrPhoneConstraint
-public record CreateUsersDto (
+public record CreateUsersDTO(
     String firstName,
     String lastName,
     @Email

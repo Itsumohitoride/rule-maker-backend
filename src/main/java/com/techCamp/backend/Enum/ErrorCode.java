@@ -11,6 +11,7 @@ public enum ErrorCode {
     ERROR_400("ERR_400", "Problem with %s"),
     ERROR_401("ERR_401", "Unauthorized"),
     ERR_REQUIRED_FIELD("ERR_REQUIRED_FIELD", "Fields %s is required"),
+    ERR_ROL_NOT_FOUND("ERR_ROL_NOT_FOUND", "%s, rol not exists."),
     ERR_DUPLICATED("ERR_DUPLICATED", "%s, already exists.");
 
     private final String code;
