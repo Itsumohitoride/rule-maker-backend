@@ -23,34 +23,30 @@ public class TableService {
     }
 
     public Table save(TableDto dto){
-        int id=autoIncrement();
-        Table table=new Table(id,dto.getTitle(),dto.getData());
+        int id = autoIncrement();
+        Table table = new Table(id,dto.getTitle(),dto.getData());
         return tableRepository.save(table);
     }
 
     public Table update(int id,TableDto dto){
-        Table table=tableRepository.findById(id);
+        Table table = tableRepository.findById(id);
         table.setData(dto.getData());
         table.setTitle(dto.getTitle());
         return tableRepository.save(table);
     }
     
     public Table delete(int id){
-        Table table= tableRepository.findById(id);
-        tableRepository.delete(table);
-        return table;
+        Table table = tableRepository.findById(id);
+        return tableRepository.delete(table);
     }
 
     public JSONObject findInBy(int id,String key,String value){
-        Table table=tableRepository.findById(id);
-        JSONObject match=tableRepository.searchInBy(table, key, value);
-        return match;
+        Table table = tableRepository.findById(id);
+        return tableRepository.searchInBy(table, key, value);
     }
 
     private int autoIncrement(){
-        List<Table> tables=tableRepository.findAll();
-        return tables.isEmpty() ? 1: tables.size()+1;
+        List<Table> tables = tableRepository.findAll();
+        return tables.isEmpty() ? 1 : tables.size() + 1;
     }
-
-
 }
