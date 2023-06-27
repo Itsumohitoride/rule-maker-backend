@@ -7,7 +7,6 @@ import javax.validation.constraints.NotNull;
 
 @Builder
 public record LoginDTO(
-
         @NotNull
         @NotBlank
         String username,

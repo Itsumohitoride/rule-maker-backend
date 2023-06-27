@@ -1,4 +1,4 @@
-package com.techCamp.backend.contller;
+package com.techCamp.backend.controller;
 
 import com.techCamp.backend.dto.LoginDTO;
 import com.techCamp.backend.dto.TokenDTO;

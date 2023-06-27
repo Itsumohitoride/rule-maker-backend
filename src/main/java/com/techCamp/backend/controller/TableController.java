@@ -20,7 +20,6 @@ import com.techCamp.backend.service.TableService;
 @RestController
 @RequestMapping("/table")
 public class TableController {
-    
     @Autowired
     TableService tableService;
 
@@ -44,16 +43,13 @@ public class TableController {
         return ResponseEntity.ok(tableService.update(id,dto));
     }
 
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Table> delete(@PathVariable("id") int id){
         return ResponseEntity.ok(tableService.delete(id));
     }
 
     @GetMapping("/evaluate/{id}")
-    public ResponseEntity<String> serchInBy(@PathVariable("id") int id,@RequestBody KeyValueDto dto){
+    public ResponseEntity<String> searchInBy(@PathVariable("id") int id,@RequestBody KeyValueDto dto){
         return ResponseEntity.ok(tableService.findInBy(id, dto.getKey(), dto.getValue()).toString());
     }
-    
-
 }
