@@ -29,7 +29,6 @@ import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
-import java.nio.charset.StandardCharsets;
 
 @Configuration
 @EnableWebSecurity
