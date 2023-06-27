@@ -8,10 +8,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.techCamp.backend.service.EvalService;
 
-import static com.techCamp.backend.api.EvaluationAPI.BASE_EVALUATION_URL;
 
 @RestController
-@RequestMapping(BASE_EVALUATION_URL)
+@RequestMapping(EvaluationAPI.BASE_EVALUATION_URL)
 @AllArgsConstructor
 public class EvalController implements EvaluationAPI {
     private final EvalService evalService;
