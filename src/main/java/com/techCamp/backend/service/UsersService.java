@@ -22,10 +22,10 @@ public class UsersService {
         validateIfPhoneIsDuplicated(createUsersDto.phoneNumber());
         validateRole(createUsersDto.role());
         User newUser = userMapper.fromCreateUserDTO(createUsersDto);
-        newUser.setUserId(UUID.randomUUID());
+        newUser.setUserId(createUsersDto.email());
         newUser.setPassword(encoder.encode(createUsersDto.password()));
         ResponseUserDTO userResponse = userMapper.fromUserToResponseUserDTO(userRepository.save(newUser));
-        userResponse.setCustomerId(newUser.getUserId());
+        userResponse.setUserIds(newUser.getUserId());
         return userResponse;
     }
 

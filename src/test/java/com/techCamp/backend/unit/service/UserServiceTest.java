@@ -12,6 +12,8 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -35,21 +37,58 @@ public class UserServiceTest {
     public void testCreateResponseCustomer() {
         when(usersRepository.findByEmail(any())).thenReturn(false);
         when(usersRepository.findByPhoneNumber(any())).thenReturn(false);
-        when(usersRepository.save(any())).thenReturn(defaultCustomer());
-        when(userMapper.fromUserToResponseUserDTO(any())).thenReturn(defaultResponseCustomerDTO());
+        when(usersRepository.save(any())).thenReturn(defaultUser());
+        when(userMapper.fromUserToResponseUserDTO(any())).thenReturn(defaultResponseUserDTO());
         usersService.save(createCustomerDTO());
-        assertEquals("lucho@email.com", defaultResponseCustomerDTO().getEmail());
+        assertEquals("lucho@email.com", defaultResponseUserDTO().getEmail());
         verify(usersRepository, times(1)).save(any());
 
     }
-    private User defaultCustomer() {
+    private User defaultUser() {
         return User.builder().firstName("luis").lastName("andres").email("lucho@email.com").password("password").phoneNumber("332036584").role("admin").build();
     }
 
-    private ResponseUserDTO defaultResponseCustomerDTO() {
+    private ResponseUserDTO defaultResponseUserDTO() {
         return ResponseUserDTO.builder().firstName("luis").lastName("andres").email("lucho@email.com").phoneNumber("332036584").role("Admin").build();
     }
     private CreateUsersDTO createCustomerDTO() {
         return CreateUsersDTO.builder().firstName("luisa").lastName("andrea").phoneNumber("332036584").role("Admin").password("password").build();
     }
+    @Test
+    @Order(3)
+    public void testCreateResponseCustomerWentEmailAlreadyExist() {
+
+
+        try {
+            when(usersRepository.findByEmail(any())).thenReturn(true);
+            when(usersRepository.findByPhoneNumber(any())).thenReturn(false);
+            when(usersRepository.save(any())).thenReturn(defaultUser());
+            when(userMapper.fromUserToResponseUserDTO(any())).thenReturn(defaultResponseUserDTO());
+            usersService.save(createCustomerDTO());
+        } catch (RuntimeException exception) {
+            assertEquals("A user with the entered email already exists.", exception.getMessage());
+        }
+
+
+    }
+
+    @Test
+    @Order(4)
+    public void testCreateResponseCustomerWentPhoneNumberAlreadyExist() {
+        try {
+            when(usersRepository.findByPhoneNumber(any())).thenReturn(true);
+            when(usersRepository.findByEmail(any())).thenReturn(false);
+            when(usersRepository.save(any())).thenReturn(defaultUser());
+            when(userMapper.fromUserToResponseUserDTO(any())).thenReturn(defaultResponseUserDTO());
+            usersService.save(createCustomerDTO());
+
+
+        } catch (RuntimeException exception) {
+
+            assertEquals("A user with the entered phone already exists.", exception.getMessage());
+        }
+
+
+    }
+
 }

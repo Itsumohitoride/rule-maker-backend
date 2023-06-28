@@ -13,7 +13,7 @@ import java.util.UUID;
 @Document(collection = "users")
 public class User {
     @Id
-    private UUID userId;
+    private String userId;
     private String firstName;
     private String lastName;
     private String email;
