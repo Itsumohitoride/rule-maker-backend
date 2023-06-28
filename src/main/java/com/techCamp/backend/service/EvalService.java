@@ -7,7 +7,8 @@ import com.techCamp.backend.model.Rule;
 public class EvalService {
     private String separator="[()]";
     private String andSeparator="&";
-    private String orSeparator="\\|\\|";
+    private String orSeparatorSplit="\\|\\|";
+    private String orSeparator="||";
     private String equalSeparator="=";
     private String greatearSeparator=">";
     private String lesserSeparator="<";
@@ -30,6 +31,7 @@ public class EvalService {
     }
 
     private boolean compare(String[] ev,boolean is,int index,JSONObject data){
+        
         if(index==ev.length){
             //Caso base, final del recorrido
             return is;
@@ -37,24 +39,30 @@ public class EvalService {
             // Caso No contiene nada
             return compare(ev,is,index+1,data);
         }else if(ev[index].contains(andSeparator)){
+            
             if(ev[index].equals(andSeparator)){
+                System.out.println(ev[index]);
+                System.out.println(is);
                 return is&&compare(ev, is, index+1, data);
             }else{
+
                 String [] values=ev[index].split(andSeparator);
                 boolean value= Boolean.parseBoolean(((String)data.get(values[0])));
                 boolean condition=Boolean.parseBoolean(values[1]);
-                return compare(ev, is&&value&&condition, index+1, data);
+                System.out.println(ev[index]);
+                return compare(ev, value&&condition, index+1, data);
             }
         }else if(ev[index].contains(orSeparator)){
             
             if(ev[index].equals(orSeparator)){
-                
+                System.out.println(ev[index]);
                 return is||compare(ev, is, index+1,data)||is;
             }else{
-                String [] values=ev[index].split(orSeparator);
+                String [] values=ev[index].split(orSeparatorSplit);
                 boolean value= Boolean.parseBoolean(((String)data.get(values[0])));
                 boolean condition=Boolean.parseBoolean(values[1]);
-                return compare(ev,(value||condition)||is, index+1, data);
+                System.out.println(ev[index]);
+                return compare(ev,value||condition, index+1, data);
             }
 
         }else if(ev[index].contains(equalSeparator)){
@@ -63,21 +71,24 @@ public class EvalService {
             String [] values=ev[index].split(equalSeparator);
             String value=(String)data.get(values[0]);
             String condition=values[1];
-            return compare(ev, value.equals(condition)&&is, index+1, data);
+            System.out.println(ev[index]);
+            return compare(ev, value.equals(condition), index+1, data);
 
         }else if(ev[index].contains(greatearSeparator)){
 
             String [] values=ev[index].split(greatearSeparator);
             int value= Integer.parseInt(((String)data.get(values[0])));
             int condition=Integer.parseInt(values[1]);
-            return compare(ev, value>condition&&is, index+1, data);
+            System.out.println(ev[index]);
+            return compare(ev, value>condition, index+1, data);
 
         }else if(ev[index].contains(lesserSeparator)){
 
             String [] values=ev[index].split(lesserSeparator);
             int value= Integer.parseInt(((String)data.get(values[0])));
             int condition=Integer.parseInt(values[1]);
-            return compare(ev, value<condition&&is, index+1, data);
+            System.out.println(ev[index]);
+            return compare(ev, value<condition, index+1, data);
             
         }else{
             
