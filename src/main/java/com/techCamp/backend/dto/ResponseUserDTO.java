@@ -8,7 +8,7 @@ import java.util.UUID;
 @Data
 @Builder
 public class ResponseUserDTO {
-    private UUID customerId;
+    private String  userIds;
     private String firstName;
     private String lastName;
     private String email;
