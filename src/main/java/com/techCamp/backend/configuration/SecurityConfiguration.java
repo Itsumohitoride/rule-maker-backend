@@ -69,11 +69,15 @@ public class SecurityConfiguration {
     @Bean
     public AuthorizationManager<RequestAuthorizationContext> requestAuthorizationContextAuthorizationManager
             (HandlerMappingIntrospector instrospector){
-        RequestMatcher permitAll = new AndRequestMatcher(new MvcRequestMatcher(instrospector, "/token"));
+        RequestMatcher permitAllToken = new AndRequestMatcher(new MvcRequestMatcher(instrospector, "/token"));
+        RequestMatcher permitAllEvaluation = new AndRequestMatcher(new MvcRequestMatcher(instrospector, "/evaluation/doEvaluation"));
+        RequestMatcher permitAllSignUp = new AndRequestMatcher(new MvcRequestMatcher(instrospector, "/user/create"));
 
         RequestMatcherDelegatingAuthorizationManager.Builder managerBuilder =
                 RequestMatcherDelegatingAuthorizationManager.builder()
-                        .add(permitAll, (context, other) -> new AuthorizationDecision(true));
+                        .add(permitAllToken, (context, other) -> new AuthorizationDecision(true))
+                        .add(permitAllEvaluation, (context, other) -> new AuthorizationDecision(true))
+                        .add(permitAllSignUp, (context, other) -> new AuthorizationDecision(true));
 
         AuthorizationManager<HttpServletRequest> manager = managerBuilder.build();
         return (authentication, object) -> manager.check(authentication, object.getRequest());
