@@ -45,7 +45,7 @@ public class TableService {
         return tableRepository.searchInBy(table, key, value);
     }
 
-    private int autoIncrement(){
+    private int autoIncrement(){ 
         List<Table> tables = tableRepository.findAll();
         return tables.isEmpty() ? 1 : tables.size() + 1;
     }
