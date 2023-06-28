@@ -17,10 +17,10 @@ public class TestConfigurationData {
         User normalCustomer = User.builder()
                 .firstName("Zara")
                 .lastName("Gomez")
-                .email("z@email.com")
+                .email("jhonDoe@email.com")
                 .password("password")
                 .phoneNumber("+573258691487")
-                .role("user")
+                .role("admin")
                 .build();
 
 

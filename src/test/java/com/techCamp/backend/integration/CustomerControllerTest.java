@@ -33,7 +33,7 @@ public class CustomerControllerTest {
     ObjectMapper objectMapper;
 
     public TokenDTO generateAdminToken() throws Exception{
-        var result = mockMvc.perform(MockMvcRequestBuilders.post("/login").content(
+        var result = mockMvc.perform(MockMvcRequestBuilders.post("/token").content(
                                 objectMapper.writeValueAsString(new LoginDTO("jhonDoe@email.com", "password"))
                         )
                         .contentType(MediaType.APPLICATION_JSON)
