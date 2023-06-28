@@ -17,7 +17,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -42,12 +42,25 @@ public class CustomerControllerTest {
                 .andReturn();
         return objectMapper.readValue(result.getResponse().getContentAsString(), TokenDTO.class);
     }
+
+    @Test
+    public void whenTokenIsRequired_ThenTokenHasGiven() throws Exception{
+        var result = mockMvc.perform(MockMvcRequestBuilders.post("/token").content(
+                                objectMapper.writeValueAsString(new LoginDTO("jhonDoe@email.com", "password")))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+        TokenDTO tokenDTO = objectMapper.readValue(result.getResponse().getContentAsString(), TokenDTO.class);
+        assertNotNull(tokenDTO);
+    }
+
     @Test
     public void testCreateUser() throws Exception{
         var newResult = mockMvc.perform(MockMvcRequestBuilders.post("/user").content(
                                 objectMapper.writeValueAsString(createCustomerDTO())
                         )
-                        .header("Authorization","Bearer "+generateAdminToken().getToken())
+                        .header("Authorization","Bearer " + generateAdminToken().getToken())
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())

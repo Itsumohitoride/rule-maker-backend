@@ -26,7 +26,6 @@ import org.springframework.security.web.util.matcher.AndRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
-import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
 
@@ -58,7 +57,7 @@ public class SecurityConfiguration {
     @Bean
     public JwtDecoder jwtDecoder(){
         byte[] bytes = secret.getBytes();
-        SecretKey key = new SecretKeySpec(bytes, 0, bytes.length, "RSA");
+        SecretKeySpec key = new SecretKeySpec(bytes, 0, bytes.length, "RSA");
         return NimbusJwtDecoder.withSecretKey(key).macAlgorithm(MacAlgorithm.HS256).build();
     }
 

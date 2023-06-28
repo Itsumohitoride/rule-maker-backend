@@ -45,20 +45,37 @@ public class UserServiceTest {
 
     }
     private User defaultUser() {
-        return User.builder().firstName("luis").lastName("andres").email("lucho@email.com").password("password").phoneNumber("332036584").role("admin").build();
+        return User.builder()
+                .firstName("luis")
+                .lastName("andres")
+                .email("lucho@email.com")
+                .password("password")
+                .phoneNumber("332036584")
+                .role("admin")
+                .build();
     }
 
     private ResponseUserDTO defaultResponseUserDTO() {
-        return ResponseUserDTO.builder().firstName("luis").lastName("andres").email("lucho@email.com").phoneNumber("332036584").role("Admin").build();
+        return ResponseUserDTO.builder()
+                .firstName("luis")
+                .lastName("andres")
+                .email("lucho@email.com")
+                .phoneNumber("332036584")
+                .role("Admin")
+                .build();
     }
     private CreateUsersDTO createCustomerDTO() {
-        return CreateUsersDTO.builder().firstName("luisa").lastName("andrea").phoneNumber("332036584").role("Admin").password("password").build();
+        return CreateUsersDTO.builder()
+                .firstName("luisa")
+                .lastName("andrea")
+                .phoneNumber("332036584")
+                .role("Admin")
+                .password("password")
+                .build();
     }
     @Test
     @Order(3)
     public void testCreateResponseCustomerWentEmailAlreadyExist() {
-
-
         try {
             when(usersRepository.findByEmail(any())).thenReturn(true);
             when(usersRepository.findByPhoneNumber(any())).thenReturn(false);
@@ -68,8 +85,6 @@ public class UserServiceTest {
         } catch (RuntimeException exception) {
             assertEquals("A user with the entered email already exists.", exception.getMessage());
         }
-
-
     }
 
     @Test
@@ -81,14 +96,8 @@ public class UserServiceTest {
             when(usersRepository.save(any())).thenReturn(defaultUser());
             when(userMapper.fromUserToResponseUserDTO(any())).thenReturn(defaultResponseUserDTO());
             usersService.save(createCustomerDTO());
-
-
         } catch (RuntimeException exception) {
-
             assertEquals("A user with the entered phone already exists.", exception.getMessage());
         }
-
-
     }
-
 }

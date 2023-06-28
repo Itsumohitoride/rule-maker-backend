@@ -18,7 +18,7 @@ public class TestConfigurationData {
                 .firstName("Zara")
                 .lastName("Gomez")
                 .email("jhonDoe@email.com")
-                .password("password")
+                .password(encoder.encode("password"))
                 .phoneNumber("+573258691487")
                 .role("admin")
                 .build();
