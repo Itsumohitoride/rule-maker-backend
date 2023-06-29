@@ -12,6 +12,9 @@ public class EvalService {
     private String equalSeparator="=";
     private String greatearSeparator=">";
     private String lesserSeparator="<";
+    private String greatearEqualSeparator=">=";
+    private String lesserEqualSeparator="<=";
+    private String diff="!=";
     private RuleService ruleService;
     private TableService tableService;
 
@@ -41,62 +44,94 @@ public class EvalService {
         }else if(ev[index].contains(andSeparator)){
             
             if(ev[index].equals(andSeparator)){
-                System.out.println(ev[index]);
-                System.out.println(is);
                 return is&&compare(ev, is, index+1, data);
             }else{
 
-                String [] values=ev[index].split(andSeparator);
-                boolean value= Boolean.parseBoolean(((String)data.get(values[0])));
-                boolean condition=Boolean.parseBoolean(values[1]);
-                System.out.println(ev[index]);
-                return compare(ev, value&&condition, index+1, data);
+                boolean [] values=booleanConverter(ev[index], andSeparator, data);
+                return compare(ev, values[0]&&values[1], index+1, data);
             }
         }else if(ev[index].contains(orSeparator)){
             
             if(ev[index].equals(orSeparator)){
-                System.out.println(ev[index]);
                 return is||compare(ev, is, index+1,data)||is;
             }else{
-                String [] values=ev[index].split(orSeparatorSplit);
-                boolean value= Boolean.parseBoolean(((String)data.get(values[0])));
-                boolean condition=Boolean.parseBoolean(values[1]);
-                System.out.println(ev[index]);
-                return compare(ev,value||condition, index+1, data);
+
+                boolean [] values=booleanConverter(ev[index], orSeparatorSplit, data);
+                return compare(ev, values[0]||values[1], index+1, data);
+
             }
-
-        }else if(ev[index].contains(equalSeparator)){
-
-            
-            String [] values=ev[index].split(equalSeparator);
-            String value=(String)data.get(values[0]);
-            String condition=values[1];
-            System.out.println(ev[index]);
-            return compare(ev, value.equals(condition), index+1, data);
 
         }else if(ev[index].contains(greatearSeparator)){
 
-            String [] values=ev[index].split(greatearSeparator);
-            int value= Integer.parseInt(((String)data.get(values[0])));
-            int condition=Integer.parseInt(values[1]);
-            System.out.println(ev[index]);
-            return compare(ev, value>condition, index+1, data);
+            
+            if(ev[index].contains(greatearEqualSeparator)){
 
+                int [] values=intConverter(ev[index], greatearEqualSeparator, data);
+                return compare(ev, values[0]>=values[1], index+1, data);
+
+            }else{
+    
+                int [] values=intConverter(ev[index], greatearSeparator, data);
+                return compare(ev, values[0]>values[1], index+1, data);
+
+            }
         }else if(ev[index].contains(lesserSeparator)){
+            
+            if(ev[index].contains(lesserEqualSeparator)){
 
-            String [] values=ev[index].split(lesserSeparator);
-            int value= Integer.parseInt(((String)data.get(values[0])));
-            int condition=Integer.parseInt(values[1]);
-            System.out.println(ev[index]);
-            return compare(ev, value<condition, index+1, data);
+                int [] values=intConverter(ev[index], lesserEqualSeparator, data);
+                return compare(ev, values[0]<=values[1], index+1, data);
+
+            }else{
+
+                int [] values=intConverter(ev[index], lesserSeparator, data);
+                return compare(ev, values[0]<values[1], index+1, data);
+
+            }
+        }else if(ev[index].contains(equalSeparator)){
             
-        }else{
-            
+            if(ev[index].contains(diff)){
+
+                String [] values=stringConverter(ev[index], diff, data);
+                return compare(ev, !values[0].equals(values[1]), index+1, data);
+
+            }else{
+
+                String [] values=stringConverter(ev[index], equalSeparator, data);;
+                return compare(ev,values[0].equals(values[1]), index+1, data);
+            }
+        } else{
             
         }
         ;
         return false;
     }
+
+    public int[] intConverter(String value,String separator,JSONObject data){
+        String [] values=value.split(separator);
+        int valueInTable= Integer.parseInt(((String)data.get(values[0])));
+        int toComparate=Integer.parseInt(values[1]);
+        int [] out={valueInTable,toComparate};
+        return out;
+    }
+
+    public String[] stringConverter(String value,String separator,JSONObject data){
+        String [] values=value.split(separator);
+        String valueInTable=(String)data.get(values[0]);
+        String toComparate=values[1];
+        String[] out={valueInTable,toComparate};
+        return out;
+    }
+
+    public boolean[] booleanConverter(String value,String separator,JSONObject data){
+        String [] values=value.split(separator);
+        boolean valueInTable= Boolean.parseBoolean(((String)data.get(values[0])));
+        boolean toComparate=Boolean.parseBoolean(values[1]);
+        boolean[] out={valueInTable,toComparate};
+        return out;
+    }
+
+    
 
 
 }
