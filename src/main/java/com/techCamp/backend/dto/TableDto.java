@@ -21,7 +21,6 @@ public class TableDto {
             JSONObject jsonObject = new JSONObject(dataMap);
             jsonArray.put(jsonObject);
         }
-        System.out.println(jsonArray.toString());
         return jsonArray;
     }
 }

@@ -30,7 +30,6 @@ public class RuleController implements RuleAPI {
 
     @Override
     public Rule save(RuleDto dto){
-        System.out.println(dto.getName());
         return ruleService.save(dto);
     }
 
