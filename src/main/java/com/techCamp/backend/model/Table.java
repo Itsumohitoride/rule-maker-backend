@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 public class Table {
     @Id
-    private int id;
+    private TableId id;
 
     private String title;
 
@@ -16,7 +16,7 @@ public class Table {
     public Table() {
     }
 
-    public Table(int id, String title, JSONArray data) {
+    public Table(TableId id, String title, JSONArray data) {
         this.id = id;
         this.title = title;
         this.data = data;
@@ -40,11 +40,11 @@ public class Table {
         return data;
     }
 
-    public void setId(int id) {
+    public void setId(TableId id) {
         this.id = id;
     }
 
-    public int getId() {
+    public TableId getId() {
         return id;
     }
 }

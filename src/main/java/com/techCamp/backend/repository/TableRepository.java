@@ -1,18 +1,14 @@
 package com.techCamp.backend.repository;
 
-import org.bson.Document;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
-
-import java.util.Map;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.techCamp.backend.model.Table;
+import com.techCamp.backend.model.TableId;
+
 import java.util.List;
 
 @Repository
@@ -25,7 +21,7 @@ public class TableRepository {
         this.mongoTemplate=mt;
     }
 
-    public Table findById(int id) {
+    public Table findById(TableId id) {
         Query query = Query.query(Criteria.where("_id").is(id));
         return mongoTemplate.findOne(query, Table.class);
     }
@@ -37,6 +33,11 @@ public class TableRepository {
 
     public List<Table> findAll() {
         return mongoTemplate.findAll(Table.class);
+    }
+
+    public List<Table>findAllIngroup(String groupId){
+        Query query = Query.query(Criteria.where("_id.groupId").is(groupId));
+        return mongoTemplate.find(query, Table.class);
     }
 
     public Table save(Table table) {

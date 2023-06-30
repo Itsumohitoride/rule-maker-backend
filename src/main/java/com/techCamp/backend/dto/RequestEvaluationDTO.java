@@ -1,5 +1,7 @@
 package com.techCamp.backend.dto;
 
+import com.techCamp.backend.model.TableId;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +11,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RequestEvaluationDTO {
     private int ruleId;
-    private int tableId;
+    private TableId tableId;
     private String key;
     private String value;
+    private String groupId;
 }

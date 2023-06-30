@@ -6,8 +6,10 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.techCamp.backend.dto.CreateTableDTO;
 import com.techCamp.backend.dto.TableDto;
 import com.techCamp.backend.model.Table;
+import com.techCamp.backend.model.TableId;
 import com.techCamp.backend.repository.TableRepository;
 @Service
 public class TableService {
@@ -18,35 +20,36 @@ public class TableService {
         return tableRepository.findAll();
     }
 
-    public Table getOne(int id){
+    public Table getOne(TableId id){
         return tableRepository.findById(id);
     }
 
-    public Table save(TableDto dto){
-        int id = autoIncrement();
+    public Table save(CreateTableDTO dto){
+        int idTable = autoIncrement(dto.getGroupId());
+        TableId id= new TableId(idTable,dto.getGroupId());
         Table table = new Table(id,dto.getTitle(),dto.getData());
         return tableRepository.save(table);
     }
 
-    public Table update(int id,TableDto dto){
+    public Table update(TableId id,TableDto dto){
         Table table = tableRepository.findById(id);
         table.setData(dto.getData());
         table.setTitle(dto.getTitle());
         return tableRepository.save(table);
     }
     
-    public Table delete(int id){
+    public Table delete(TableId id){
         Table table = tableRepository.findById(id);
         return tableRepository.delete(table);
     }
 
-    public JSONObject findInBy(int id,String key,String value){
+    public JSONObject findInBy(TableId id,String key,String value){
         Table table = tableRepository.findById(id);
         return tableRepository.searchInBy(table, key, value);
     }
 
-    private int autoIncrement(){ 
-        List<Table> tables = tableRepository.findAll();
+    private int autoIncrement(String groupId){ 
+        List<Table> tables = tableRepository.findAllIngroup(groupId);
         return tables.isEmpty() ? 1 : tables.size() + 1;
     }
 }
