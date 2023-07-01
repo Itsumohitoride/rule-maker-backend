@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.techCamp.backend.api.TableAPI;
 import com.techCamp.backend.dto.CRUDTableDto;
+import com.techCamp.backend.dto.ColumnDTO;
 import com.techCamp.backend.dto.CreateTableDTO;
 import com.techCamp.backend.dto.RequestEvaluationDTO;
 import lombok.AllArgsConstructor;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.techCamp.backend.dto.TableDto;
+import com.techCamp.backend.model.Column;
+import com.techCamp.backend.model.ColumnID;
 import com.techCamp.backend.model.Table;
 import com.techCamp.backend.model.TableId;
 import com.techCamp.backend.service.TableService;
@@ -68,6 +71,26 @@ public class TableController implements TableAPI {
     @Override
     public boolean removeInBy(CRUDTableDto dto) {
         return tableService.removeInBy(dto.getTableId(), dto.getKey(), dto.getValue());
+    }
+
+    @Override
+    public Column save(ColumnDTO dto) {
+        return tableService.save(dto);
+    }
+
+    @Override
+    public Column delete(ColumnID id) {
+        return tableService.remove(id);
+    }
+
+    @Override
+    public Column get(ColumnID id) {
+        return tableService.findOne(id);
+    }
+
+    @Override
+    public List<Column> get(TableId id) {
+        return tableService.findColumns(id);
     }
     
 }
