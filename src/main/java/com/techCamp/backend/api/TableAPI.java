@@ -1,5 +1,7 @@
 package com.techCamp.backend.api;
 
+import org.json.JSONObject;
+import com.techCamp.backend.dto.CRUDTableDto;
 import com.techCamp.backend.dto.CreateTableDTO;
 import com.techCamp.backend.dto.RequestEvaluationDTO;
 import com.techCamp.backend.dto.TableDto;
@@ -26,4 +28,6 @@ public interface TableAPI {
     public String searchInBy(@RequestBody RequestEvaluationDTO evaluation);
     @GetMapping
     public List<Table> getAll();
+    @GetMapping("/update")
+    public JSONObject updateInBy(@RequestBody CRUDTableDto dto);
 }

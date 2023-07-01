@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 import com.techCamp.backend.model.Table;
 import com.techCamp.backend.model.TableId;
@@ -66,4 +67,12 @@ public class TableRepository {
         }
         return null;
     }
+
+    public JSONObject updateInBy(Table table, String key, String value,JSONObject toUpdate) {
+        Query query = new Query(Criteria.where("_id").is(table.getId()).and("data.myArrayList.map." + key).is(value));
+        Update update = new Update().set("data.myArrayList.$", toUpdate);
+        mongoTemplate.updateMulti(query, update, Table.class);
+        return toUpdate;
+    }
+    
 }

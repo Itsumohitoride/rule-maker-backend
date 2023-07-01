@@ -5,11 +5,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import org.codehaus.plexus.component.annotations.Component;
-import org.json.JSONArray;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.data.mongodb.MongoDatabaseFactory;
 import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
 import org.springframework.data.mongodb.core.convert.DbRefResolver;
@@ -19,13 +16,9 @@ import org.springframework.data.mongodb.core.convert.MongoCustomConversions;
 import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
-import com.techCamp.backend.components.JSONArrayDeserializer;
 import com.techCamp.backend.components.JSONArrayReadConverter;
-import com.techCamp.backend.components.JSONArraySerializer;
 import com.techCamp.backend.components.JSONObjectReadConverter;
 
 @Configuration

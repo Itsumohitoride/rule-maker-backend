@@ -2,10 +2,14 @@ package com.techCamp.backend.controller;
 
 import java.util.List;
 
+
 import com.techCamp.backend.api.TableAPI;
+import com.techCamp.backend.dto.CRUDTableDto;
 import com.techCamp.backend.dto.CreateTableDTO;
 import com.techCamp.backend.dto.RequestEvaluationDTO;
 import lombok.AllArgsConstructor;
+
+import org.json.JSONObject;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -49,5 +53,11 @@ public class TableController implements TableAPI {
     @Override
     public List<Table> getAll(){
         return tableService.getAll();
+    }
+
+    @Override
+    public JSONObject updateInBy(CRUDTableDto dto) {
+        System.out.println(dto.getTableId().getGroupId()+"::::"+dto.getTableId().getGroupId());
+        return tableService.updateInBy(dto.getTableId(), dto.getKey(), dto.getValue(), new JSONObject(dto.getToUpdate()));
     }
 }

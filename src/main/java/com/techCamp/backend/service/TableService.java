@@ -48,8 +48,15 @@ public class TableService {
         return tableRepository.searchInBy(table, key, value);
     }
 
+    public JSONObject updateInBy(TableId id,String key,String value,JSONObject toUpdate){
+        Table table = tableRepository.findById(id);
+        return tableRepository.updateInBy(table, key, value,toUpdate);
+    }
+
     private int autoIncrement(String groupId){ 
         List<Table> tables = tableRepository.findAllIngroup(groupId);
         return tables.isEmpty() ? 1 : tables.size() + 1;
     }
+
+
 }
