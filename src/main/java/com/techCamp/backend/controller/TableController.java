@@ -57,7 +57,17 @@ public class TableController implements TableAPI {
 
     @Override
     public JSONObject updateInBy(CRUDTableDto dto) {
-        System.out.println(dto.getTableId().getGroupId()+"::::"+dto.getTableId().getGroupId());
         return tableService.updateInBy(dto.getTableId(), dto.getKey(), dto.getValue(), new JSONObject(dto.getToUpdate()));
     }
+
+    @Override
+    public JSONObject pushInBy(CRUDTableDto dto) {
+        return tableService.pushInBy(dto.getTableId(), dto.getKey(), dto.getValue(), new JSONObject(dto.getToUpdate()));
+    }
+
+    @Override
+    public boolean removeInBy(CRUDTableDto dto) {
+        return tableService.removeInBy(dto.getTableId(), dto.getKey(), dto.getValue());
+    }
+    
 }

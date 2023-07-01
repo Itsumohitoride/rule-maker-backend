@@ -28,6 +28,10 @@ public interface TableAPI {
     public String searchInBy(@RequestBody RequestEvaluationDTO evaluation);
     @GetMapping
     public List<Table> getAll();
-    @GetMapping("/update")
+    @PutMapping("/update")
     public JSONObject updateInBy(@RequestBody CRUDTableDto dto);
+    @PostMapping("/create")
+    public JSONObject pushInBy(@RequestBody CRUDTableDto dto);
+    @DeleteMapping("/delete")
+    public boolean removeInBy(@RequestBody CRUDTableDto dto);
 }

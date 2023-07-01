@@ -7,6 +7,8 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
+
+import com.mongodb.BasicDBObject;
 import com.techCamp.backend.model.Table;
 import com.techCamp.backend.model.TableId;
 
@@ -73,6 +75,20 @@ public class TableRepository {
         Update update = new Update().set("data.myArrayList.$", toUpdate);
         mongoTemplate.updateMulti(query, update, Table.class);
         return toUpdate;
+    }
+
+    public JSONObject pushInBy(Table table, JSONObject toUpdate) {
+        Query query = new Query(Criteria.where("_id").is(table.getId()));
+        Update update = new Update().push("data.myArrayList", toUpdate);
+        mongoTemplate.updateMulti(query, update, Table.class);
+        return toUpdate;
+    }
+
+    public boolean removeInBy(Table table, String key, String value) {
+        Query query = new Query(Criteria.where("_id").is(table.getId()).and("data.myArrayList.map." + key).is(value));
+        Update update = new Update().pull("data.myArrayList", new BasicDBObject("map." + key, value));
+        mongoTemplate.updateFirst(query, update, Table.class);
+        return true;
     }
     
 }

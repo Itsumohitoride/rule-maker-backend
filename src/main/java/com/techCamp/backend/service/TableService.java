@@ -53,6 +53,16 @@ public class TableService {
         return tableRepository.updateInBy(table, key, value,toUpdate);
     }
 
+    public JSONObject pushInBy(TableId id,String key,String value,JSONObject toUpdate){
+        Table table = tableRepository.findById(id);
+        return tableRepository.pushInBy(table,toUpdate);
+    }
+
+    public boolean removeInBy(TableId id,String key,String value){
+        Table table = tableRepository.findById(id);
+        return tableRepository.removeInBy(table, key, value);
+    }
+
     private int autoIncrement(String groupId){ 
         List<Table> tables = tableRepository.findAllIngroup(groupId);
         return tables.isEmpty() ? 1 : tables.size() + 1;
