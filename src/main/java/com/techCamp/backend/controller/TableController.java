@@ -2,14 +2,23 @@ package com.techCamp.backend.controller;
 
 import java.util.List;
 
+
 import com.techCamp.backend.api.TableAPI;
+import com.techCamp.backend.dto.CRUDTableDto;
+import com.techCamp.backend.dto.ColumnDTO;
+import com.techCamp.backend.dto.CreateTableDTO;
 import com.techCamp.backend.dto.RequestEvaluationDTO;
 import lombok.AllArgsConstructor;
+
+import org.json.JSONObject;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.techCamp.backend.dto.TableDto;
+import com.techCamp.backend.model.Column;
+import com.techCamp.backend.model.ColumnID;
 import com.techCamp.backend.model.Table;
+import com.techCamp.backend.model.TableId;
 import com.techCamp.backend.service.TableService;
 
 
@@ -20,22 +29,22 @@ public class TableController implements TableAPI {
     private final TableService tableService;
 
     @Override
-    public Table getOne(int id){
+    public Table getOne(TableId id){
         return tableService.getOne(id);
     }
 
     @Override
-    public Table save(TableDto dto){
+    public Table save(CreateTableDTO dto){
         return tableService.save(dto);
     }
 
     @Override
-    public Table update(int id, TableDto dto){
-        return tableService.update(id, dto);
+    public Table update(TableDto dto){
+        return tableService.update(dto.getId(),dto);
     }
 
     @Override
-    public Table delete(int id){
+    public Table delete(TableId id){
         return tableService.delete(id);
     }
 
@@ -48,4 +57,40 @@ public class TableController implements TableAPI {
     public List<Table> getAll(){
         return tableService.getAll();
     }
+
+    @Override
+    public JSONObject updateInBy(CRUDTableDto dto) {
+        return tableService.updateInBy(dto.getTableId(), dto.getKey(), dto.getValue(), new JSONObject(dto.getToUpdate()));
+    }
+
+    @Override
+    public JSONObject pushInBy(CRUDTableDto dto) {
+        return tableService.pushInBy(dto.getTableId(), dto.getKey(), dto.getValue(), new JSONObject(dto.getToUpdate()));
+    }
+
+    @Override
+    public boolean removeInBy(CRUDTableDto dto) {
+        return tableService.removeInBy(dto.getTableId(), dto.getKey(), dto.getValue());
+    }
+
+    @Override
+    public Column save(ColumnDTO dto) {
+        return tableService.save(dto);
+    }
+
+    @Override
+    public Column delete(ColumnID id) {
+        return tableService.remove(id);
+    }
+
+    @Override
+    public Column get(ColumnID id) {
+        return tableService.findOne(id);
+    }
+
+    @Override
+    public List<Column> get(TableId id) {
+        return tableService.findColumns(id);
+    }
+    
 }

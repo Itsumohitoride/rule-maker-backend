@@ -25,7 +25,6 @@ public class JSONArrayDeserializer extends StdDeserializer<JSONArray> {
     @Override
     public JSONArray deserialize(com.fasterxml.jackson.core.JsonParser p, DeserializationContext ctxt)
             throws IOException, JacksonException {
-        System.out.println("**********************************************************************");
         
         String json = p.getText();
         return new JSONArray(json);

@@ -6,12 +6,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Getter
-@AllArgsConstructor
 @NoArgsConstructor
-public class RequestEvaluationDTO {
-    private int ruleId;
+@AllArgsConstructor
+@Getter
+public class ColumnDTO {
     private TableId tableId;
-    private String key;
-    private String value;
+    private String name;
+    private String type;
 }

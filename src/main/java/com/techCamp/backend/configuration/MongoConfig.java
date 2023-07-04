@@ -5,27 +5,27 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import org.json.JSONArray;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.mongodb.MongoDatabaseFactory;
 import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
+import org.springframework.data.mongodb.core.convert.DbRefResolver;
+import org.springframework.data.mongodb.core.convert.DefaultDbRefResolver;
+import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
 import org.springframework.data.mongodb.core.convert.MongoCustomConversions;
+import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.fasterxml.jackson.databind.util.Converter;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.techCamp.backend.components.JSONArrayReadConverter;
-import com.techCamp.backend.components.JSONArraySerializer;
 import com.techCamp.backend.components.JSONObjectReadConverter;
 
 @Configuration
 @EnableMongoRepositories(basePackages = {"org.spring.mongo.demo","com.techCamp.backend.repository"})
 public class MongoConfig extends AbstractMongoClientConfiguration {
 
-    private final List<Converter<?, ?>> converters = new ArrayList<Converter<?, ?>>();
+    private MongoDatabaseFactory mongoFactory;
 
     @Override
     protected String getDatabaseName() {
@@ -48,17 +48,22 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
         List<Object> converters = new ArrayList<>();
         converters.add(new JSONArrayReadConverter());
         converters.add(new JSONObjectReadConverter());
-        return new MongoCustomConversions(converters);
+        MongoCustomConversions conversions=new MongoCustomConversions(converters);
+        return conversions;
     }
 
     @Bean
-    public ObjectMapper getObjectMapper() {
-        var objectMapper = new ObjectMapper();
-
-        SimpleModule module = new SimpleModule();
-        module.addSerializer(JSONArray.class, new JSONArraySerializer());
-        objectMapper.registerModule(module);
-
-        return objectMapper;
+    @Override
+    public MappingMongoConverter mappingMongoConverter(MongoDatabaseFactory databaseFactory,
+			MongoCustomConversions customConversions, MongoMappingContext mappingContext) {
+        DbRefResolver dbRefResolver = new DefaultDbRefResolver(databaseFactory);
+		MappingMongoConverter converter = new MappingMongoConverter(dbRefResolver, mappingContext);
+		converter.setCustomConversions(customConversions);
+		converter.setCodecRegistryProvider(databaseFactory);
+        converter.setMapKeyDotReplacement(".");
+        
+        return converter;
     }
+
+    
 }

@@ -3,6 +3,7 @@ import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import com.techCamp.backend.model.Rule;
+import com.techCamp.backend.model.TableId;
 @Service
 public class EvalService {
     private String separator="[()]";
@@ -25,7 +26,7 @@ public class EvalService {
     }
 
 
-    public boolean evaluate(int idRule,int idTable,String key,String value){
+    public boolean evaluate(int idRule,TableId idTable,String key,String value){
         Rule rule=ruleService.getOne(idRule);
         JSONObject data=tableService.findInBy(idTable, key, value);
         String[] separate=rule.getRule().split(separator);

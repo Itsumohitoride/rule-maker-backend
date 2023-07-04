@@ -1,18 +1,17 @@
 package com.techCamp.backend.repository;
 
-import org.bson.Document;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
-
-import java.util.Map;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mongodb.BasicDBObject;
 import com.techCamp.backend.model.Table;
+import com.techCamp.backend.model.TableId;
+
 import java.util.List;
 
 @Repository
@@ -25,7 +24,7 @@ public class TableRepository {
         this.mongoTemplate=mt;
     }
 
-    public Table findById(int id) {
+    public Table findById(TableId id) {
         Query query = Query.query(Criteria.where("_id").is(id));
         return mongoTemplate.findOne(query, Table.class);
     }
@@ -37,6 +36,11 @@ public class TableRepository {
 
     public List<Table> findAll() {
         return mongoTemplate.findAll(Table.class);
+    }
+
+    public List<Table>findAllIngroup(String groupId){
+        Query query = Query.query(Criteria.where("_id.groupId").is(groupId));
+        return mongoTemplate.find(query, Table.class);
     }
 
     public Table save(Table table) {
@@ -65,4 +69,26 @@ public class TableRepository {
         }
         return null;
     }
+
+    public JSONObject updateInBy(Table table, String key, String value,JSONObject toUpdate) {
+        Query query = new Query(Criteria.where("_id").is(table.getId()).and("data.myArrayList.map." + key).is(value));
+        Update update = new Update().set("data.myArrayList.$", toUpdate);
+        mongoTemplate.updateMulti(query, update, Table.class);
+        return toUpdate;
+    }
+
+    public JSONObject pushInBy(Table table, JSONObject toUpdate) {
+        Query query = new Query(Criteria.where("_id").is(table.getId()));
+        Update update = new Update().push("data.myArrayList", toUpdate);
+        mongoTemplate.updateMulti(query, update, Table.class);
+        return toUpdate;
+    }
+
+    public boolean removeInBy(Table table, String key, String value) {
+        Query query = new Query(Criteria.where("_id").is(table.getId()).and("data.myArrayList.map." + key).is(value));
+        Update update = new Update().pull("data.myArrayList", new BasicDBObject("map." + key, value));
+        mongoTemplate.updateFirst(query, update, Table.class);
+        return true;
+    }
+    
 }

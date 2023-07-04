@@ -1,17 +1,17 @@
 package com.techCamp.backend.dto;
+
 import java.util.List;
 import java.util.Map;
 
-import lombok.Getter;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.techCamp.backend.model.TableId;
+import lombok.Getter;
 
 @Getter
-public class TableDto {
+public class CreateTableDTO {
     private String title;
-    private TableId id;
+    private String groupId;
     private List<Map<String, Object>> data;
 
     public JSONArray getData(){
