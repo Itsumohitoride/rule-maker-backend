@@ -79,8 +79,8 @@ public class SecurityConfiguration {
                         .add(permitAllToken, (context, other) -> new AuthorizationDecision(true))
                         .add(permitAllEvaluation, (context, other) -> new AuthorizationDecision(true))
                         .add(permitAllSignUp, (context, other) -> new AuthorizationDecision(true))
-                        .add(new MvcRequestMatcher(instrospector, "/columns"),
-                                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_USER"));
+                        .add(new MvcRequestMatcher(instrospector, "/table/get"),
+                                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_USER", "SCOPE_ADMIN"));
 
         AuthorizationManager<HttpServletRequest> manager = managerBuilder.build();
         return (authentication, object) -> manager.check(authentication, object.getRequest());
