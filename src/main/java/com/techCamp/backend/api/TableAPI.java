@@ -23,7 +23,7 @@ public interface TableAPI {
     @PostMapping
     Table save(@RequestBody CreateTableDTO dto);
     @GetMapping("/get")
-    public Table getOne(@RequestParam TableId id);
+    public Table getOne(@RequestParam String groupId, @RequestParam int tableId);
     @PutMapping("/{id}")
     public Table update(@RequestBody TableDto dto);
     @DeleteMapping("/{id}")
@@ -43,7 +43,7 @@ public interface TableAPI {
     @DeleteMapping(BASE_COLUMN_URL+"/delete")
     public Column delete(@RequestBody ColumnID dto);
     @GetMapping(BASE_COLUMN_URL)
-    public Column get(@RequestParam ColumnID id);
+    public Column get(@RequestParam String groupId, @RequestParam int tableId,@RequestParam String name);
     @GetMapping(BASE_COLUMN_URL+"s")
-    public List<Column> get(@RequestParam TableId id);
+    public List<Column> get(@RequestParam String groupId, @RequestParam int tableId);
 }

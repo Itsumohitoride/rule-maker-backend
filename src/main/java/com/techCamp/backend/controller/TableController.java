@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.techCamp.backend.dto.TableDto;
@@ -29,7 +30,8 @@ public class TableController implements TableAPI {
     private final TableService tableService;
 
     @Override
-    public Table getOne(TableId id){
+    public Table getOne(String groupId, int tableId){
+        TableId id=new TableId(tableId,groupId);
         return tableService.getOne(id);
     }
 
@@ -84,12 +86,15 @@ public class TableController implements TableAPI {
     }
 
     @Override
-    public Column get(ColumnID id) {
+    public Column get( String groupId,  int tableId, String name) {
+        TableId idTable=new TableId(tableId,groupId);
+        ColumnID id=new ColumnID(idTable,name);
         return tableService.findOne(id);
     }
 
     @Override
-    public List<Column> get(TableId id) {
+    public List<Column> get(String groupId, int tableId) {
+        TableId id=new TableId(tableId,groupId);
         return tableService.findColumns(id);
     }
     
