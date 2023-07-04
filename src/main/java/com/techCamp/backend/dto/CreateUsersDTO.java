@@ -17,6 +17,5 @@ public record CreateUsersDTO(
     String phoneNumber,
     @NotNull
     @NotBlank
-    String password,
-    String role) {
+    String password) {
 }
