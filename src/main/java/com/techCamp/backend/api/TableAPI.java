@@ -23,13 +23,13 @@ public interface TableAPI {
     @PostMapping
     Table save(@RequestBody CreateTableDTO dto);
     @GetMapping("/get")
-    public Table getOne(@RequestBody TableId id);
+    public Table getOne(@RequestParam TableId id);
     @PutMapping("/{id}")
     public Table update(@RequestBody TableDto dto);
     @DeleteMapping("/{id}")
     public Table delete(@RequestBody TableId id);
     @GetMapping("/evaluate")
-    public String searchInBy(@RequestBody RequestEvaluationDTO evaluation);
+    public String searchInBy(@RequestParam RequestEvaluationDTO evaluation);
     @GetMapping
     public List<Table> getAll();
     @PutMapping("/update")
@@ -43,7 +43,7 @@ public interface TableAPI {
     @DeleteMapping(BASE_COLUMN_URL+"/delete")
     public Column delete(@RequestBody ColumnID dto);
     @GetMapping(BASE_COLUMN_URL)
-    public Column get(@RequestBody ColumnID id);
+    public Column get(@RequestParam ColumnID id);
     @GetMapping(BASE_COLUMN_URL+"s")
-    public List<Column> get(@RequestBody TableId id);
+    public List<Column> get(@RequestParam TableId id);
 }
