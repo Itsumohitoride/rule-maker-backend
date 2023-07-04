@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authorization.AuthorityAuthorizationManager;
 import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.authorization.AuthorizationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -77,7 +78,9 @@ public class SecurityConfiguration {
                 RequestMatcherDelegatingAuthorizationManager.builder()
                         .add(permitAllToken, (context, other) -> new AuthorizationDecision(true))
                         .add(permitAllEvaluation, (context, other) -> new AuthorizationDecision(true))
-                        .add(permitAllSignUp, (context, other) -> new AuthorizationDecision(true));
+                        .add(permitAllSignUp, (context, other) -> new AuthorizationDecision(true))
+                        .add(new MvcRequestMatcher(instrospector, "/columns"),
+                                AuthorityAuthorizationManager.hasAnyAuthority("SCOPE_USER"));
 
         AuthorizationManager<HttpServletRequest> manager = managerBuilder.build();
         return (authentication, object) -> manager.check(authentication, object.getRequest());

@@ -46,6 +46,4 @@ public interface TableAPI {
     public Column get(@RequestBody ColumnID id);
     @GetMapping(BASE_COLUMN_URL+"s")
     public List<Column> get(@RequestBody TableId id);
-
-    
 }
