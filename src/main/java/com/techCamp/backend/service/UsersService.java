@@ -18,10 +18,10 @@ public class UsersService {
     public ResponseUserDTO save(CreateUsersDTO createUsersDto) {
         validateIfEmailIsDuplicated(createUsersDto.email());
         validateIfPhoneIsDuplicated(createUsersDto.phoneNumber());
-        validateRole("USER");
         User newUser = userMapper.fromCreateUserDTO(createUsersDto);
         newUser.setUserId(createUsersDto.email());
         newUser.setPassword(encoder.encode(createUsersDto.password()));
+        newUser.setRole("USER");
         ResponseUserDTO userResponse = userMapper.fromUserToResponseUserDTO(userRepository.save(newUser));
         userResponse.setUserIds(newUser.getUserId());
         return userResponse;
