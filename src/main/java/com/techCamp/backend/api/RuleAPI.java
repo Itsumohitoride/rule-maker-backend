@@ -10,7 +10,7 @@ import java.util.List;
 public interface RuleAPI {
     String BASE_RULE_URL = "/rule";
 
-    @PostMapping
+    @PostMapping("/create")
     public Rule save(@RequestBody RuleDto dto);
     @PutMapping("/{id}")
     public Rule update(@PathVariable int id,@RequestBody RuleDto dto);
