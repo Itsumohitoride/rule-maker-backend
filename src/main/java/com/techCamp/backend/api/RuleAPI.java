@@ -10,7 +10,7 @@ import java.util.List;
 public interface RuleAPI {
     String BASE_RULE_URL = "/rule";
 
-    @PostMapping
+    @PostMapping("/create")
     public Rule save(@RequestBody RuleDto dto);
     @PutMapping("/{id}")
     public Rule update(@PathVariable int id,@RequestBody RuleDto dto);
@@ -18,6 +18,6 @@ public interface RuleAPI {
     public Rule delete(@PathVariable int id);
     @GetMapping("/{id}")
     public Rule getOne(@PathVariable int id);
-    @GetMapping
+    @GetMapping("/getAll")
     public List<Rule> getAll();
 }
