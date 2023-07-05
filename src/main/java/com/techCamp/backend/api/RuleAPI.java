@@ -18,6 +18,6 @@ public interface RuleAPI {
     public Rule delete(@PathVariable int id);
     @GetMapping("/{id}")
     public Rule getOne(@PathVariable int id);
-    @GetMapping
+    @GetMapping("/getAll")
     public List<Rule> getAll();
 }
