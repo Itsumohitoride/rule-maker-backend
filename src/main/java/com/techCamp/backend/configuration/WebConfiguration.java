@@ -37,7 +37,7 @@ public class WebConfiguration implements WebMvcConfigurer {
         source.registerCorsConfiguration("/**", corsConfiguration);
         return source;
     }
-     @Bean
+    @Bean
     public MappingJackson2HttpMessageConverter jacksonMessageConverter(ObjectMapper objectMapper) {
         MappingJackson2HttpMessageConverter messageConverter = new MappingJackson2HttpMessageConverter();
         messageConverter.setObjectMapper(objectMapper);
@@ -58,5 +58,4 @@ public class WebConfiguration implements WebMvcConfigurer {
         objectMapper.registerModule(module);
         return objectMapper;
     }
-
 }
