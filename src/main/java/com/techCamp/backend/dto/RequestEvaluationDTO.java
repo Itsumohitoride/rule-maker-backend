@@ -1,6 +1,8 @@
 package com.techCamp.backend.dto;
 
-import com.techCamp.backend.model.TableId;
+
+import java.util.Map;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,8 +12,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RequestEvaluationDTO {
-    private int ruleId;
-    private TableId tableId;
-    private String key;
-    private String value;
+    private RuleDto rule;
+    private Map<String, Object> data;
 }

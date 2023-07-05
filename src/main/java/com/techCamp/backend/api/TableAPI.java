@@ -4,7 +4,6 @@ import org.json.JSONObject;
 import com.techCamp.backend.dto.CRUDTableDto;
 import com.techCamp.backend.dto.ColumnDTO;
 import com.techCamp.backend.dto.CreateTableDTO;
-import com.techCamp.backend.dto.RequestEvaluationDTO;
 import com.techCamp.backend.dto.TableDto;
 import com.techCamp.backend.model.Column;
 import com.techCamp.backend.model.ColumnID;
@@ -28,8 +27,6 @@ public interface TableAPI {
     public Table update(@RequestBody TableDto dto);
     @DeleteMapping("/{id}")
     public Table delete(@RequestBody TableId id);
-    @GetMapping("/evaluate")
-    public String searchInBy(@RequestParam RequestEvaluationDTO evaluation);
     @GetMapping
     public List<Table> getAll();
     @PutMapping("/update")

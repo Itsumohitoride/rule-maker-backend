@@ -12,7 +12,6 @@ import lombok.AllArgsConstructor;
 
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.techCamp.backend.dto.TableDto;
@@ -48,11 +47,6 @@ public class TableController implements TableAPI {
     @Override
     public Table delete(TableId id){
         return tableService.delete(id);
-    }
-
-    @Override
-    public String searchInBy(RequestEvaluationDTO evaluation){
-        return tableService.findInBy(evaluation.getTableId(), evaluation.getKey(), evaluation.getValue()).toString();
     }
 
     @Override

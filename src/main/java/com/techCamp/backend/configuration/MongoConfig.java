@@ -25,8 +25,6 @@ import com.techCamp.backend.components.JSONObjectReadConverter;
 @EnableMongoRepositories(basePackages = {"org.spring.mongo.demo","com.techCamp.backend.repository"})
 public class MongoConfig extends AbstractMongoClientConfiguration {
 
-    private MongoDatabaseFactory mongoFactory;
-
     @Override
     protected String getDatabaseName() {
         return "rule_maker";

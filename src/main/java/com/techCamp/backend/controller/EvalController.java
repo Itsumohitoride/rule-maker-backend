@@ -3,6 +3,8 @@ package com.techCamp.backend.controller;
 import com.techCamp.backend.api.EvaluationAPI;
 import com.techCamp.backend.dto.RequestEvaluationDTO;
 import lombok.AllArgsConstructor;
+
+import org.json.JSONObject;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,6 +19,6 @@ public class EvalController implements EvaluationAPI {
 
     @Override
     public boolean evaluateRule(RequestEvaluationDTO evaluation){
-        return evalService.evaluate(evaluation.getRuleId(), evaluation.getTableId(), evaluation.getKey(), evaluation.getValue());
+        return evalService.evaluate(evaluation.getRule(),new JSONObject(evaluation.getData()));
     }
 }

@@ -2,6 +2,7 @@ package com.techCamp.backend.service;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
+import com.techCamp.backend.dto.RuleDto;
 import com.techCamp.backend.model.Rule;
 import com.techCamp.backend.model.TableId;
 @Service
@@ -26,9 +27,7 @@ public class EvalService {
     }
 
 
-    public boolean evaluate(int idRule,TableId idTable,String key,String value){
-        Rule rule=ruleService.getOne(idRule);
-        JSONObject data=tableService.findInBy(idTable, key, value);
+    public boolean evaluate(RuleDto rule,JSONObject data){
         String[] separate=rule.getRule().split(separator);
         
         return compare(separate, true,0,data);
