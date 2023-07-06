@@ -59,7 +59,7 @@ public class TableService {
         return tableRepository.updateInBy(table, key, value,toUpdate);
     }
 
-    public JSONObject pushInBy(TableId id,String key,String value,JSONObject toUpdate){
+    public JSONObject pushInBy(TableId id,JSONObject toUpdate){
         Table table = tableRepository.findById(id);
         return tableRepository.pushInBy(table,toUpdate);
     }

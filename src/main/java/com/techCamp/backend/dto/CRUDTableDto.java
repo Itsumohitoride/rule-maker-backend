@@ -15,7 +15,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CRUDTableDto {
-    private TableId tableId;
+    private int tableId;
+    private String groupId;
     private Map<String, Object> toUpdate = new HashMap<>();
     private String key;
     private String value;
