@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.techCamp.backend.dto.GroupDTO;
 import com.techCamp.backend.dto.RoleMemberDTO;
 import com.techCamp.backend.model.Group;
+import com.techCamp.backend.model.UserGroup;
 import com.techCamp.backend.repository.GroupRepository;
 
 @Service
@@ -44,7 +45,12 @@ public class GroupService {
     public Group addMember(RoleMemberDTO dto){
         Group group = groupRepository.findById(dto.getGroupId());
         group.addMember(dto.getEmail(),dto.getRole());
+        groupRepository.addMember(dto.getEmail(), dto.getGroupId());
         return groupRepository.save(group);
+    }
+
+    public List<UserGroup> getGroupsOf(String userId){
+        return groupRepository.getGroupsOf(userId);
     }
 
     public Group changeUserRole(RoleMemberDTO dto){
@@ -52,4 +58,5 @@ public class GroupService {
         group.changeRole(dto.getEmail(),dto.getRole());
         return groupRepository.save(group);
     }
+
 }

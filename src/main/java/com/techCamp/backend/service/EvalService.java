@@ -3,8 +3,6 @@ import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import com.techCamp.backend.dto.RuleDto;
-import com.techCamp.backend.model.Rule;
-import com.techCamp.backend.model.TableId;
 @Service
 public class EvalService {
     private String separator="[()]";
@@ -17,19 +15,15 @@ public class EvalService {
     private String greatearEqualSeparator=">=";
     private String lesserEqualSeparator="<=";
     private String diff="!=";
-    private RuleService ruleService;
-    private TableService tableService;
 
 
-    public EvalService(RuleService ruleService,TableService tableService){
-        this.tableService=tableService;
-        this.ruleService=ruleService;
+    public EvalService(){
+
     }
 
 
     public boolean evaluate(RuleDto rule,JSONObject data){
         String[] separate=rule.getRule().split(separator);
-        
         return compare(separate, true,0,data);
     }
 

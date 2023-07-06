@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
 import com.techCamp.backend.model.Group;
+import com.techCamp.backend.model.UserGroup;
 @Repository
 public class GroupRepository {
     private final MongoTemplate mongoTemplate;
@@ -39,5 +40,18 @@ public class GroupRepository {
         Query query = Query.query(Criteria.where("_id").is(group.getId()));
         mongoTemplate.remove(query, Group.class);
         return group;
+    }
+
+    public boolean addMember(String userId,String groupId){
+        UserGroup userGroup=new UserGroup(userId,groupId);
+        mongoTemplate.save(userGroup);
+        return true;
+    }
+
+    public List<UserGroup> getGroupsOf(String userId){
+        System.out.println(userId);
+        Query query = Query.query(Criteria.where("userId").is(userId));
+        mongoTemplate.find(query, UserGroup.class);
+        return mongoTemplate.find(query, UserGroup.class);
     }
 }

@@ -8,6 +8,7 @@ import com.techCamp.backend.api.GroupAPI;
 import com.techCamp.backend.dto.GroupDTO;
 import com.techCamp.backend.dto.RoleMemberDTO;
 import com.techCamp.backend.model.Group;
+import com.techCamp.backend.model.UserGroup;
 import com.techCamp.backend.service.GroupService;
 import lombok.AllArgsConstructor;
 
@@ -51,4 +52,9 @@ public class GroupController implements GroupAPI {
         return groupService.changeUserRole(dto);
     }
 
+    @Override
+    public List<UserGroup> getGroupsOf(String userId){
+        System.out.println(userId);
+        return groupService.getGroupsOf(userId);
+    }
 }
