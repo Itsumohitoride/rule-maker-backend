@@ -6,6 +6,7 @@ import com.techCamp.backend.dto.LoginDTO;
 import com.techCamp.backend.dto.TokenDTO;
 import com.techCamp.backend.integration.config.TestConfigurationData;
 import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.web.util.NestedServletException;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -44,6 +46,7 @@ public class CustomerControllerTest {
     }
 
     @Test
+    @Order(1)
     public void whenTokenIsRequired_ThenTokenHasGiven() throws Exception{
         var result = mockMvc.perform(MockMvcRequestBuilders.post("/token").content(
                                 objectMapper.writeValueAsString(new LoginDTO("jhonDoe@email.com", "password")))
@@ -56,8 +59,9 @@ public class CustomerControllerTest {
     }
 
     @Test
+    @Order(2)
     public void testCreateUser() throws Exception{
-        var newResult = mockMvc.perform(MockMvcRequestBuilders.post("/user").content(
+        var newResult = mockMvc.perform(MockMvcRequestBuilders.post("/user/create").content(
                                 objectMapper.writeValueAsString(createCustomerDTO())
                         )
                         .header("Authorization","Bearer " + generateAdminToken().getToken())
@@ -67,6 +71,24 @@ public class CustomerControllerTest {
                 .andReturn();
 
         assertEquals(200, newResult.getResponse().getStatus());
+
+    }
+    @Test
+    @Order(3)
+    public void testCreateUserWentEmailAlreadyExists() throws Exception{
+        try {
+            var newResult = mockMvc.perform(MockMvcRequestBuilders.post("/user/create")
+                            .content(objectMapper.writeValueAsString(createCustomerDTO()))
+                            .header("Authorization", "Bearer " + generateAdminToken().getToken())
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .accept(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isBadRequest())
+                    .andReturn();
+
+            assertEquals(404, newResult.getResponse().getStatus());
+        } catch (NestedServletException e) {
+            Throwable rootCause = e.getRootCause();
+        }
 
     }
     private CreateUsersDTO createCustomerDTO() {
