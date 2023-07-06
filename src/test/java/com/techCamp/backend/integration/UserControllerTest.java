@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Import(TestConfigurationData.class)
 @ActiveProfiles(profiles = "test")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class CustomerControllerTest {
+public class UserControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
@@ -91,15 +91,41 @@ public class CustomerControllerTest {
         }
 
     }
+    @Test
+    @Order(3)
+    public void testCreateUserWentPhoneNumberAlreadyExists() throws Exception{
+        try {
+            var newResult = mockMvc.perform(MockMvcRequestBuilders.post("/user/create")
+                            .content(objectMapper.writeValueAsString(createCustomerDTO2()))
+                            .header("Authorization", "Bearer " + generateAdminToken().getToken())
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .accept(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isBadRequest())
+                    .andReturn();
+
+            assertEquals(404, newResult.getResponse().getStatus());
+        } catch (NestedServletException e) {
+            Throwable rootCause = e.getRootCause();
+        }
+
+    }
     private CreateUsersDTO createCustomerDTO() {
         return CreateUsersDTO.builder()
                 .firstName("luis")
                 .lastName("andres")
-                .email("johndo@eemail.com")
-                .phoneNumber("+573258690188")
+                .email("johndo2@eemail.com")
+                .phoneNumber("+5732586901880")
                 .role("admin")
                 .password("password").build();
     }
-
+    private CreateUsersDTO createCustomerDTO2() {
+        return CreateUsersDTO.builder()
+                .firstName("luis")
+                .lastName("andres")
+                .email("johndo3@eemail.com")
+                .phoneNumber("+5732586901880")
+                .role("admin")
+                .password("password").build();
+    }
 
 }

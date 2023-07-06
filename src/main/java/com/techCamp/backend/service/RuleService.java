@@ -2,14 +2,15 @@ package com.techCamp.backend.service;
 
 import java.util.List;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.techCamp.backend.dto.RuleDto;
 import com.techCamp.backend.model.Rule;
 import com.techCamp.backend.repository.RuleRepository;
-
 @Service
+@AllArgsConstructor
 public class RuleService {
     
     @Autowired
