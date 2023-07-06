@@ -22,8 +22,8 @@ public class TableService {
     @Autowired
     ColumnsRepository columnsRepository;
 
-    public List<Table> getAll(){
-        return tableRepository.findAll();
+    public List<Table> getAll(String groupId){
+        return tableRepository.findAllIngroup(groupId);
     }
 
     public Table getOne(TableId id){

@@ -49,7 +49,6 @@ public class GroupRepository {
     }
 
     public List<UserGroup> getGroupsOf(String userId){
-        System.out.println(userId);
         Query query = Query.query(Criteria.where("userId").is(userId));
         mongoTemplate.find(query, UserGroup.class);
         return mongoTemplate.find(query, UserGroup.class);

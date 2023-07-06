@@ -50,8 +50,8 @@ public class TableController implements TableAPI {
     }
 
     @Override
-    public List<Table> getAll(){
-        return tableService.getAll();
+    public List<Table> getAll(String groupId){
+        return tableService.getAll(groupId);
     }
 
     @Override

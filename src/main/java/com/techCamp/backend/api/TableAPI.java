@@ -28,7 +28,7 @@ public interface TableAPI {
     @DeleteMapping("/{id}")
     public Table delete(@RequestBody TableId id);
     @GetMapping
-    public List<Table> getAll();
+    public List<Table> getAll(@RequestParam String groupId);
     @PutMapping("/update")
     public JSONObject updateInBy(@RequestBody CRUDTableDto dto);
     @PostMapping("/create")

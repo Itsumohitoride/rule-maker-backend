@@ -54,7 +54,6 @@ public class GroupController implements GroupAPI {
 
     @Override
     public List<UserGroup> getGroupsOf(String userId){
-        System.out.println(userId);
         return groupService.getGroupsOf(userId);
     }
 }

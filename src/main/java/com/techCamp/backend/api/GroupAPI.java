@@ -30,9 +30,9 @@ public interface GroupAPI {
     public Group getOne(@PathVariable String id);
     @GetMapping
     public List<Group> getAll();
-    @PutMapping("/{id}/member")
+    @PutMapping("/member")
     public Group addMember(@RequestBody RoleMemberDTO dto);
-    @PutMapping("/{id}/member/role")
+    @PutMapping("/member/role")
     public Group changeRoleToMemeber(@RequestBody RoleMemberDTO dto);
     @GetMapping("/Mygroups")
     public List<UserGroup> getGroupsOf(@RequestParam String userId);
